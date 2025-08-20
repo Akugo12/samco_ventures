@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Samco Ventures - Shop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+    }
+
+    header, footer {
+      background: #2c3e50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .product {
+      background: white;
+      padding: 15px;
+      border-radius: 6px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      text-align: center;
+      position: relative;
+    }
+
+    .product img {
+      max-width: 100%;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn:hover {
+      background-color: #1a252f;
+    }
+
+    .selected-label {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: green;
+      color: white;
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      display: none;
+    }
+
+    .cart {
+      margin-top: 40px;
+      background: white;
+      padding: 20px;
+      border-radius: 6px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    .cart table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .cart th, .cart td {
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    .remove-btn {
+      background: crimson;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .place-order {
+      margin-top: 15px;
+      background: green;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    form input, form textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 600px) {
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="images/ii.jpg" alt="Samco Ventures Logo" style="height: 50px; vertical-align: middle;" />
+    <h1 style="display: inline;"> Samco Ventures</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>Our Products</h2>
+
+    <div class="product-grid" id="product-grid"></div>
+
+    <div class="cart">
+      <h2>Your Cart</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="cart-body"></tbody>
+      </table>
+      <h3 id="cart-total">Total: KES 0</h3>
+
+      <hr />
+
+      <h3>Customer Details</h3>
+      <form id="order-form">
+        <input type="text" id="customer-name" placeholder="Full Name" required />
+        <input id="customer-phone" placeholder="Phone Number" required />
+        <textarea id="customer-address" placeholder="Delivery Address" required></textarea>
+        <button class="place-order" type="submit">Place Order via WhatsApp</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Samco Ventures</p>
+  </footer>
+
+  <script>
+    const products = [
+      { name: "tracks", price: 300, img: "images/i9.jpg" },
+      { name: "trousers", price: 800, img: "images/i15.jpg" },
+      { name: "track suit", price: 450, img: "images/i8.jpg" },
+      { name: "school uniform", price: 250, img: "images/i13.jpg" },
+    ];
+
+    const selectedTracker = {};
+
+    function renderProducts() {
+      const grid = document.getElementById("product-grid");
+      grid.innerHTML = "";
+
+      products.forEach((product) => {
+        const div = document.createElement("div");
+        div.classList.add("product");
+
+        div.innerHTML = `
+          <span class="selected-label" id="label-${product.name.replace(/\s/g, '')}">Added</span>
+          <img src="${product.img}" alt="${product.name}" />
+          <h3>${product.name}</h3>
+          <p>KES ${product.price.toLocaleString()}</p>
+          <button class="btn" onclick="handleProductClick('${product.name}', ${product.price})">Add to Cart</button>
+        `;
+
+        grid.appendChild(div);
+      });
+    }
+
+    function handleProductClick(name, price) {
+      const labelId = `label-${name.replace(/\s/g, '')}`;
+      const label = document.getElementById(labelId);
+
+      if (!selectedTracker[name]) {
+        selectedTracker[name] = 1;
+        label.style.display = 'inline-block';
+      } else {
+        selectedTracker[name]++;
+        if (confirm(`${name} already selected. Add another one?`)) {
+          // Proceed
+        } else {
+          return;
+        }
+      }
+
+      addToCart(name, price);
+    }
+
+    function addToCart(name, price) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const index = cart.findIndex(item => item.name === name);
+      if (index > -1) {
+        cart[index].quantity += 1;
+      } else {
+        cart.push({ name, price, quantity: 1 });
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    function removeItem(index) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    function renderCart() {
+      const body = document.getElementById("cart-body");
+      const totalDisplay = document.getElementById("cart-total");
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      body.innerHTML = "";
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${item.name}</td>
+          <td>${item.price}</td>
+          <td>${item.quantity}</td>
+          <td>${itemTotal.toLocaleString()}</td>
+          <td><button class="remove-btn" onclick="removeItem(${index})">Remove</button></td>
+        `;
+        body.appendChild(row);
+      });
+
+      totalDisplay.innerText = `Total: KES ${total.toLocaleString()}`;
+    }
+
+    function placeOrder(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("customer-name").value.trim();
+      const phone = document.getElementById("customer-phone").value.trim();
+      const address = document.getElementById("customer-address").value.trim();
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      if (!name || !phone || !address) {
+        alert("Please fill in all customer details.");
+        return;
+      }
+
+      if (cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
+      }
+
+      let message = `🛍 *New Order*\n\n`;
+      let total = 0;
+
+      cart.forEach((item, i) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        message += `${i + 1}. ${item.name} - ${item.quantity} pcs = KES ${itemTotal.toLocaleString()}\n`;
+      });
+
+      message += `\n💵 Total: KES ${total.toLocaleString()}`;
+      message += `\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n📍 Address: ${address}`;
+
+      const whatsappURL = `https://wa.me/254704952434?text=${encodeURIComponent(message)}`;
+      window.open(whatsappURL, '_blank');
+
+      // Clear cart and form
+      localStorage.removeItem("cart");
+      document.getElementById("order-form").reset();
+      setTimeout(() => location.reload(), 1500);
+    }
+
+    document.getElementById("order-form").addEventListener("submit", placeOrder);
+
+    renderProducts();
+    renderCart();
+  </script>
+</body>
+</html>
