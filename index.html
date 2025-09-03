@@ -32,16 +32,30 @@
       object-fit: cover;
     }
 
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
     nav a {
       color: white;
       text-decoration: none;
-      margin-left: 25px;
       font-weight: 600;
       cursor: pointer;
     }
 
     nav a:hover {
       color: #e91e63;
+    }
+
+    #menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
     }
 
     .container {
@@ -89,25 +103,41 @@
       opacity: 1;
     }
 
-    .video-grid {
-      position: relative;
-      height: 200px;
+    .video-player-wrapper {
       width: 100%;
+      height: 400px;
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 30px;
     }
 
-    .video-grid video {
-      position: absolute;
-      top: 0; left: 0;
+    #main-video {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 6px;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
+      background: black;
+      visibility: hidden;
     }
 
-    .video-grid video.active {
-      opacity: 1;
+    #video-sound-toggle {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    #video-sound-toggle:hover {
+      background: #e91e63;
     }
 
     .gallery {
@@ -140,27 +170,6 @@
       font-size: 1rem;
       border-radius: 6px;
       cursor: pointer;
-    }
-
-    #music-toggle {
-      position: fixed;
-      top: 80px;
-      right: 20px;
-      background: #1e2a38;
-      color: white;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 1002;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-
-    #music-toggle:hover {
-      background: #e91e63;
     }
 
     footer {
@@ -202,38 +211,31 @@
       z-index: 1001;
     }
 
-    #menu-toggle {
-      display: none;
-    }
-
     @media (max-width: 600px) {
       nav {
-        flex-direction: column;
-        position: fixed;
+        position: absolute;
         top: 65px;
         right: 0;
-        width: 200px;
-        transform: translateX(100%);
-        transition: transform 0.3s ease-in-out;
-        height: calc(100vh - 65px);
-        padding-top: 20px;
         background: #1e2a38;
+        flex-direction: column;
+        width: 100%;
+        display: none;
+        padding: 10px 0;
+        box-sizing: border-box;
         z-index: 1000;
       }
+
       nav.open {
-        transform: translateX(0);
+        display: flex;
       }
+
       nav a {
-        margin: 15px 20px;
-        font-size: 1.2rem;
+        padding: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
       }
+
       #menu-toggle {
         display: block;
-        background: none;
-        border: none;
-        color: white;
-        font-size: 28px;
-        cursor: pointer;
       }
     }
   </style>
@@ -245,7 +247,7 @@
   <button id="menu-toggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
   <nav id="main-nav">
     <a href="#" data-section="home" class="nav-link active">Home</a>
-    <a href="shop.html">Shop</a> 
+    <a href="shop.html">Shop with us</a>
     <a href="#" data-section="about" class="nav-link">About</a>
     <a href="#" data-section="services" class="nav-link">Services</a>
     <a href="#" data-section="gallery" class="nav-link">Gallery</a>
@@ -253,166 +255,125 @@
   </nav>
 </header>
 
-<!-- Background Music Toggle -->
-<div id="music-toggle" title="Toggle Music">
-  <i class="fas fa-volume-mute" id="music-icon"></i>
-</div>
-<audio id="background-music" loop>
-  <source src="music.mp3" type="audio/mp3" />
-</audio>
-
-<!-- WhatsApp Chat -->
 <a href="https://wa.me/254704952434" target="_blank" id="whatsapp-chat">
   <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- Background Image Slider -->
 <div id="background-slider">
   <img src="images/i10.jpg" class="active" />
   <img src="images/ii.jpg" />
   <img src="images/iii.jpg" />
 </div>
 
-<!-- Main Container -->
 <div class="container" id="content">
-
   <section id="home-section" class="active">
     <h1>Welcome to Samco Ventures</h1>
     <p>Located in Migori, we specialize in quality fashion apparel, accessories, and bespoke tailoring.</p>
-    <div class="video-grid">
-      <video playsinline><source src="s.mp4" type="video/mp4" /></video>
-      <video playsinline><source src="s5.mp4" type="video/mp4" /></video>
-      <video playsinline><source src="s3.mp4" type="video/mp4" /></video>
+
+    <div class="video-player-wrapper">
+      <video id="main-video" muted autoplay playsinline controls preload="auto">
+        <source id="main-video-source" src="videos/s.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div id="video-sound-toggle" title="Toggle Sound">
+        <i class="fas fa-volume-mute" id="video-sound-icon"></i>
+      </div>
     </div>
   </section>
 
-  <section id="about-section">
-    <h2>About Us</h2>
-    <p>Samco Ventures is a modern fashion brand that blends African heritage with contemporary style. We’re committed to empowering the community through design, creativity, and excellence.</p>
-  </section>
-
-  <section id="services-section">
-    <h2>Our Services</h2>
-    <ul>
-      <li>Custom Tailoring & Alterations</li>
-      <li>Style Consultations</li>
-      <li>Wholesale Supplies</li>
-      <li>Fashion Event Planning</li>
-      <li>Home Try-On Services</li>
-    </ul>
-  </section>
-
-  <section id="gallery-section">
-    <h2>Gallery</h2>
-    <div class="gallery">
-      <img src="images/i.jpg" alt="Gallery 1" />
-      <img src="images/i13.jpg" alt="Gallery 2" />
-      <img src="images/i16.jpg" alt="Gallery 3" />
-    </div>
-  </section>
-
-  <section id="contact-section">
-    <h2>Contact Us</h2>
-    <form>
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="Email Address" required />
-      <textarea rows="5" placeholder="Your Message" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
-  </section>
-
+  <section id="about-section"><h2>About Us</h2><p>Samco Ventures blends African heritage with modern style, empowering the community through creativity.</p></section>
+  <section id="services-section"><h2>Our Services</h2><ul><li>Tailoring & Alterations</li><li>Style Consultations</li><li>Wholesale</li><li>Event Planning</li><li>Home Try-On</li></ul></section>
+  <section id="gallery-section"><h2>Gallery</h2><div class="gallery"><img src="images/i.jpg"/><img src="images/i13.jpg"/><img src="images/i16.jpg"/></div></section>
+  <section id="contact-section"><h2>Contact Us</h2><form><input type="text" placeholder="Your Name" required /><input type="email" placeholder="Email Address" required /><textarea rows="5" placeholder="Your Message" required></textarea><button type="submit">Send Message</button></form></section>
 </div>
 
 <footer>
-  <p>&copy; 2025 Samco Ventures, Migori</p>
+  <p>&copy; 2025 Samco Ventures. All rights reserved.</p>
   <div class="social-icons">
-    <a href="mailto:info@samcoventures.co.ke"><i class="fas fa-envelope"></i> Email</a>
-    <a href="#"><i class="fab fa-facebook"></i></a>
-    <a href="#"><i class="fab fa-instagram"></i></a>
-    <a href="#"><i class="fab fa-twitter"></i></a>
+    <a href="https://facebook.com/samcoventures" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+    <a href="https://instagram.com/samcoventures" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+    <a href="https://twitter.com/samcoventures" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
   </div>
 </footer>
 
 <script>
-  const bgImages = document.querySelectorAll('#background-slider img');
-  const videos = document.querySelectorAll('.video-grid video');
-  let currentIndex = 0;
+  // Mobile menu toggle
+  const menuToggle = document.getElementById('menu-toggle');
+  const nav = document.getElementById('main-nav');
+  menuToggle.addEventListener('click', () => {
+    nav.classList.toggle('open');
+  });
 
-  function switchSlide() {
-    bgImages.forEach(img => img.classList.remove('active'));
-    videos.forEach(v => {
-      v.classList.remove('active');
-      v.pause();
-      v.currentTime = 0;
-    });
-    bgImages[currentIndex].classList.add('active');
-    videos[currentIndex].classList.add('active');
-    videos[currentIndex].play();
-    currentIndex = (currentIndex + 1) % bgImages.length;
-  }
-
-  setInterval(switchSlide, 7000);
-  switchSlide();
-
-  function enableSound() {
-    videos.forEach(v => v.muted = false);
-    document.removeEventListener('click', enableSound);
-  }
-
-  document.addEventListener('click', enableSound);
-
-  // Music Control
-  const music = document.getElementById('background-music');
-  const musicIcon = document.getElementById('music-icon');
-  const musicToggle = document.getElementById('music-toggle');
-  let musicPlaying = false;
-
-  function toggleMusic() {
-    if (musicPlaying) {
-      music.pause();
-      musicIcon.classList.remove('fa-volume-up');
-      musicIcon.classList.add('fa-volume-mute');
-    } else {
-      music.play();
-      musicIcon.classList.remove('fa-volume-mute');
-      musicIcon.classList.add('fa-volume-up');
-    }
-    musicPlaying = !musicPlaying;
-  }
-
-  musicToggle.addEventListener('click', toggleMusic);
-  document.addEventListener('click', () => {
-    if (!musicPlaying) toggleMusic();
-  }, { once: true });
-
-  // Navigation
-  const sections = document.querySelectorAll('section');
+  // Section nav
   const navLinks = document.querySelectorAll('.nav-link');
+  const sections = {
+    home: document.getElementById('home-section'),
+    about: document.getElementById('about-section'),
+    services: document.getElementById('services-section'),
+    gallery: document.getElementById('gallery-section'),
+    contact: document.getElementById('contact-section')
+  };
 
   navLinks.forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
+      const target = link.getAttribute('data-section');
+      if (!target) return;
+
       navLinks.forEach(l => l.classList.remove('active'));
+      Object.values(sections).forEach(sec => sec.classList.remove('active'));
       link.classList.add('active');
-      sections.forEach(sec => sec.classList.remove('active'));
-      document.getElementById(`${link.dataset.section}-section`).classList.add('active');
-      document.getElementById('main-nav').classList.remove('open');
+      sections[target].classList.add('active');
+      nav.classList.remove('open');
     });
   });
 
-  // Mobile nav toggle
-  const menuToggle = document.getElementById('menu-toggle');
-  const nav = document.getElementById('main-nav');
+  // Background slider
+  const bgImages = document.querySelectorAll('#background-slider img');
+  let bgIndex = 0;
+  setInterval(() => {
+    bgImages[bgIndex].classList.remove('active');
+    bgIndex = (bgIndex + 1) % bgImages.length;
+    bgImages[bgIndex].classList.add('active');
+  }, 6000);
 
-  menuToggle.addEventListener('click', () => {
-    nav.classList.toggle('open');
+  // Video looping playlist
+  const video = document.getElementById('main-video');
+  const videoSources = ["s.mp4", "s5.mp4", "s3.mp4"];
+  let videoIndex = 0;
+
+  function playNextVideo() {
+    videoIndex = (videoIndex + 1) % videoSources.length;
+    video.src = videoSources[videoIndex];
+    video.load();
+    video.play();
+  }
+
+  video.addEventListener('loadeddata', () => {
+    video.style.visibility = 'visible';
+  });
+
+  video.addEventListener('ended', () => {
+    playNextVideo();
+  });
+
+  // Sound toggle
+  const soundToggle = document.getElementById('video-sound-toggle');
+  const soundIcon = document.getElementById('video-sound-icon');
+  soundToggle.addEventListener('click', () => {
+    video.muted = !video.muted;
+    soundIcon.classList.toggle('fa-volume-mute', video.muted);
+    soundIcon.classList.toggle('fa-volume-up', !video.muted);
+  });
+
+  // Preload videos
+  videoSources.forEach(src => {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'video';
+    link.href = src;
+    document.head.appendChild(link);
   });
 </script>
-
 </body>
 </html>
-
-
-
-
-
