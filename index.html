@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Samco Ventures - Landing Page</title>
+  <title>Samco Ventures – Landing Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
   <style>
     body, html {
-      margin: 0; padding: 0; height: 100%;
+      margin: 0;
+      padding: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #f7f7f7;
       overflow-x: hidden;
@@ -63,7 +64,7 @@
       margin: 60px auto;
       background: white;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       padding: 30px 25px;
     }
 
@@ -83,7 +84,8 @@
 
     #background-slider {
       position: fixed;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100vh;
       z-index: -1;
@@ -105,11 +107,12 @@
 
     .video-player-wrapper {
       width: 100%;
+      max-width: 800px;
       height: 400px;
+      margin: 20px auto 40px;
       position: relative;
       border-radius: 8px;
       overflow: hidden;
-      margin-bottom: 30px;
     }
 
     #main-video {
@@ -124,7 +127,7 @@
       position: absolute;
       bottom: 20px;
       right: 20px;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0, 0, 0, 0.6);
       color: white;
       border-radius: 50%;
       width: 40px;
@@ -140,36 +143,94 @@
       background: #e91e63;
     }
 
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .gallery img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 6px;
-    }
-
-    form input, form textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-
-    form button {
-      background: #1e2a38;
+    #next-video-btn {
+      position: absolute;
+      bottom: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      background: #e91e63;
       color: white;
       border: none;
-      padding: 10px 20px;
-      font-size: 1rem;
-      border-radius: 6px;
+      border-radius: 5px;
       cursor: pointer;
+      display: none;
+      z-index: 10;
+    }
+
+    .slideshow-container {
+      max-width: 800px;
+      position: relative;
+      margin: 40px auto;
+    }
+
+    .mySlides {
+      display: none;
+    }
+
+    .mySlides img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      padding: 16px;
+      margin-top: -22px;
+      color: white;
+      font-weight: bold;
+      font-size: 24px;
+      background-color: rgba(0, 0, 0, 0.5);
+      border: none;
+      border-radius: 3px;
+      user-select: none;
+    }
+
+    .prev {
+      left: 10px;
+    }
+
+    .next {
+      right: 10px;
+    }
+
+    .row {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .row .demo {
+      width: 100px;
+      height: 60px;
+      object-fit: cover;
+      opacity: 0.6;
+      margin: 0 5px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .row .demo:hover,
+    .row .active {
+      opacity: 1;
+    }
+
+    .shop-section {
+      padding: 40px 0;
+      text-align: center;
+      background-color: #fff4f6;
+      border-radius: 8px;
+      margin-top: 40px;
+    }
+
+    .shop-section a {
+      background: #e91e63;
+      color: white;
+      padding: 12px 24px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 6px;
     }
 
     footer {
@@ -211,6 +272,41 @@
       z-index: 1001;
     }
 
+    /* SOCIAL FLOATING SIDEBAR */
+    .social-sidebar {
+      position: fixed;
+      top: 40%;
+      right: 0;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      z-index: 1001;
+    }
+
+    .social-btn {
+      background-color: #1e2a38;
+      color: white;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 20px;
+      margin: 5px 0;
+      transition: background 0.3s ease;
+    }
+
+    .social-btn:hover {
+      background-color: #e91e63;
+    }
+
+    .social-btn.whatsapp { background-color: #25d366; }
+    .social-btn.facebook { background-color: #3b5998; }
+    .social-btn.twitter  { background-color: #1da1f2; }
+    .social-btn.email    { background-color: #ff6f00; }
+    .social-btn.tiktok   { background-color: #000000; }
+
     @media (max-width: 600px) {
       nav {
         position: absolute;
@@ -221,7 +317,6 @@
         width: 100%;
         display: none;
         padding: 10px 0;
-        box-sizing: border-box;
         z-index: 1000;
       }
 
@@ -242,138 +337,201 @@
 </head>
 <body>
 
-<header>
-  <img src="images/i.jpg" alt="Samco Ventures Logo" class="logo" />
-  <button id="menu-toggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
-  <nav id="main-nav">
-    <a href="#" data-section="home" class="nav-link active">Home</a>
-    <a href="shop.html">Shop with us</a>
-    <a href="#" data-section="about" class="nav-link">About</a>
-    <a href="#" data-section="services" class="nav-link">Services</a>
-    <a href="#" data-section="gallery" class="nav-link">Gallery</a>
-    <a href="#" data-section="contact" class="nav-link">Contact</a>
-  </nav>
-</header>
+  <!-- Header -->
+  <header>
+    <img src="images/i.jpg" alt="Samco Ventures Logo" class="logo" />
+    <button id="menu-toggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+    <nav id="main-nav">
+      <a href="#" data-section="home" class="nav-link active">Home</a>
+      <a href="shop.html">Shop with Us</a>
+      <a href="#" data-section="about" class="nav-link">About</a>
+      <a href="#" data-section="services" class="nav-link">Services</a>
+      <a href="#" data-section="gallery" class="nav-link">Gallery</a>
+      <a href="#" data-section="contact" class="nav-link">Contact</a>
+    </nav>
+  </header>
 
-<a href="https://wa.me/254704952434" target="_blank" id="whatsapp-chat">
-  <i class="fab fa-whatsapp"></i>
-</a>
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/254704952434" target="_blank" id="whatsapp-chat">
+    <i class="fab fa-whatsapp"></i>
+  </a>
 
-<div id="background-slider">
-  <img src="images/i10.jpg" class="active" />
-  <img src="images/ii.jpg" />
-  <img src="images/iii.jpg" />
-</div>
-
-<div class="container" id="content">
-  <section id="home-section" class="active">
-    <h1>Welcome to Samco Ventures</h1>
-    <p>Located in Migori, we specialize in quality fashion apparel, accessories, and bespoke tailoring.</p>
-
-    <div class="video-player-wrapper">
-      <video id="main-video" muted autoplay playsinline controls preload="auto">
-        <source id="main-video-source" src="videos/s.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      <div id="video-sound-toggle" title="Toggle Sound">
-        <i class="fas fa-volume-mute" id="video-sound-icon"></i>
-      </div>
-    </div>
-  </section>
-
-  <section id="about-section"><h2>About Us</h2><p>Samco Ventures blends African heritage with modern style, empowering the community through creativity.</p></section>
-  <section id="services-section"><h2>Our Services</h2><ul><li>Tailoring & Alterations</li><li>Style Consultations</li><li>Wholesale</li><li>Event Planning</li><li>Home Try-On</li></ul></section>
-  <section id="gallery-section"><h2>Gallery</h2><div class="gallery"><img src="images/i.jpg"/><img src="images/i13.jpg"/><img src="images/i16.jpg"/></div></section>
-  <section id="contact-section"><h2>Contact Us</h2><form><input type="text" placeholder="Your Name" required /><input type="email" placeholder="Email Address" required /><textarea rows="5" placeholder="Your Message" required></textarea><button type="submit">Send Message</button></form></section>
-</div>
-
-<footer>
-  <p>&copy; 2025 Samco Ventures. All rights reserved.</p>
-  <div class="social-icons">
-    <a href="https://facebook.com/samcoventures" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
-    <a href="https://instagram.com/samcoventures" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-    <a href="https://twitter.com/samcoventures" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+  <!-- Floating Sidebar -->
+  <div class="social-sidebar">
+    <a href="https://wa.me/254704952434" class="social-btn whatsapp" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://facebook.com/samcoventures" class="social-btn facebook" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://twitter.com/samcoventures" class="social-btn twitter" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+    <a href="mailto:samcoventures@example.com" class="social-btn email" title="Email"><i class="fas fa-envelope"></i></a>
+    <a href="https://tiktok.com/@samcoventures" class="social-btn tiktok" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
   </div>
-</footer>
 
-<script>
-  // Mobile menu toggle
-  const menuToggle = document.getElementById('menu-toggle');
-  const nav = document.getElementById('main-nav');
-  menuToggle.addEventListener('click', () => {
-    nav.classList.toggle('open');
-  });
+  <!-- Background Slider -->
+  <div id="background-slider">
+    <img src="images/i10.jpg" class="active" />
+    <img src="images/ii.jpg" />
+    <img src="images/iii.jpg" />
+  </div>
 
-  // Section nav
-  const navLinks = document.querySelectorAll('.nav-link');
-  const sections = {
-    home: document.getElementById('home-section'),
-    about: document.getElementById('about-section'),
-    services: document.getElementById('services-section'),
-    gallery: document.getElementById('gallery-section'),
-    contact: document.getElementById('contact-section')
-  };
+  <!-- Main Content -->
+  <div class="container" id="content">
+    <section id="home-section" class="active">
+      <h1>Welcome to Samco Ventures</h1>
+      <p>Located in Migori, we specialize in quality fashion apparel, accessories, and bespoke tailoring.</p>
 
-  navLinks.forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const target = link.getAttribute('data-section');
-      if (!target) return;
+      <!-- Shop First -->
+      <div class="shop-section">
+        <h2>Want to Shop with Us?</h2>
+        <p>Explore our latest collection of fashion apparel, accessories, and custom styles.</p>
+        <a href="shop.html">Visit Our Shop</a>
+      </div>
 
-      navLinks.forEach(l => l.classList.remove('active'));
-      Object.values(sections).forEach(sec => sec.classList.remove('active'));
-      link.classList.add('active');
-      sections[target].classList.add('active');
-      nav.classList.remove('open');
+      <!-- Video Section -->
+      <div class="video-player-wrapper">
+        <video id="main-video" muted playsinline controls preload="auto">
+          <source id="main-video-source" src="videos/s.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div id="video-sound-toggle" title="Toggle Sound">
+          <i class="fas fa-volume-mute" id="video-sound-icon"></i>
+        </div>
+        <button id="next-video-btn">Watch Another Video</button>
+      </div>
+    </section>
+
+    <!-- Other Sections -->
+    <section id="about-section"><h2>About Us</h2><p>Samco Ventures blends African heritage with modern style, empowering the community through creativity.</p></section>
+    <section id="services-section"><h2>Our Services</h2><ul><li>Tailoring & Alterations</li><li>Style Consultations</li><li>Wholesale</li><li>Event Planning</li><li>Home Try-On</li></ul></section>
+    <section id="gallery-section">
+      <h2>Gallery</h2>
+      <div class="slideshow-container">
+        <div class="mySlides"><img src="images/i.jpg" alt=""></div>
+        <div class="mySlides"><img src="images/i13.jpg" alt=""></div>
+        <div class="mySlides"><img src="images/i16.jpg" alt=""></div>
+        <button class="prev" onclick="plusSlides(-1)">&#10094;</button>
+        <button class="next" onclick="plusSlides(1)">&#10095;</button>
+      </div>
+      <div class="row">
+        <img class="demo" src="images/i.jpg" onclick="currentSlide(1)" alt="">
+        <img class="demo" src="images/i13.jpg" onclick="currentSlide(2)" alt="">
+        <img class="demo" src="images/i16.jpg" onclick="currentSlide(3)" alt="">
+      </div>
+    </section>
+
+    <section id="contact-section">
+      <h2>Contact Us</h2>
+      <form>
+        <input type="text" placeholder="Your Name" required />
+        <input type="email" placeholder="Email Address" required />
+        <textarea rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Samco Ventures. All rights reserved.</p>
+    <div class="social-icons">
+      <a href="https://facebook.com/samcoventures" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+      <a href="https://instagram.com/samcoventures" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="https://twitter.com/samcoventures" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+    </div>
+  </footer>
+
+  <!-- Script Section -->
+  <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const nav = document.getElementById('main-nav');
+    const video = document.getElementById('main-video');
+    const nextButton = document.getElementById('next-video-btn');
+    const soundToggle = document.getElementById('video-sound-toggle');
+    const soundIcon = document.getElementById('video-sound-icon');
+
+    const videoSources = ["videos/s.mp4", "videos/s5.mp4", "videos/s3.mp4"];
+    let videoIndex = 0;
+
+    menuToggle.addEventListener('click', () => nav.classList.toggle('open'));
+
+    // Section navigation
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = {
+      home: document.getElementById('home-section'),
+      about: document.getElementById('about-section'),
+      services: document.getElementById('services-section'),
+      gallery: document.getElementById('gallery-section'),
+      contact: document.getElementById('contact-section')
+    };
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = link.getAttribute('data-section');
+        if (!target) return;
+        navLinks.forEach(l => l.classList.remove('active'));
+        Object.values(sections).forEach(sec => sec.classList.remove('active'));
+        link.classList.add('active');
+        sections[target].classList.add('active');
+        nav.classList.remove('open');
+      });
     });
-  });
 
-  // Background slider
-  const bgImages = document.querySelectorAll('#background-slider img');
-  let bgIndex = 0;
-  setInterval(() => {
-    bgImages[bgIndex].classList.remove('active');
-    bgIndex = (bgIndex + 1) % bgImages.length;
-    bgImages[bgIndex].classList.add('active');
-  }, 6000);
+    // Background slider
+    const bgImages = document.querySelectorAll('#background-slider img');
+    let bgIndex = 0;
+    setInterval(() => {
+      bgImages[bgIndex].classList.remove('active');
+      bgIndex = (bgIndex + 1) % bgImages.length;
+      bgImages[bgIndex].classList.add('active');
+    }, 6000);
 
-  // Video looping playlist
-  const video = document.getElementById('main-video');
-  const videoSources = ["s.mp4", "s5.mp4", "s3.mp4"];
-  let videoIndex = 0;
+    // Video logic
+    video.addEventListener('loadeddata', () => {
+      video.style.visibility = 'visible';
+    });
 
-  function playNextVideo() {
-    videoIndex = (videoIndex + 1) % videoSources.length;
-    video.src = videoSources[videoIndex];
-    video.load();
-    video.play();
-  }
+    video.addEventListener('ended', () => {
+      nextButton.style.display = 'block';
+    });
 
-  video.addEventListener('loadeddata', () => {
-    video.style.visibility = 'visible';
-  });
+    nextButton.addEventListener('click', () => {
+      videoIndex = (videoIndex + 1) % videoSources.length;
+      loadVideo(videoIndex);
+    });
 
-  video.addEventListener('ended', () => {
-    playNextVideo();
-  });
+    function loadVideo(index) {
+      video.src = videoSources[index];
+      video.muted = true;
+      video.load();
+      video.oncanplay = () => {
+        video.play().catch(err => console.warn("Playback error:", err));
+        video.oncanplay = null;
+      };
+      nextButton.style.display = "none";
+    }
 
-  // Sound toggle
-  const soundToggle = document.getElementById('video-sound-toggle');
-  const soundIcon = document.getElementById('video-sound-icon');
-  soundToggle.addEventListener('click', () => {
-    video.muted = !video.muted;
-    soundIcon.classList.toggle('fa-volume-mute', video.muted);
-    soundIcon.classList.toggle('fa-volume-up', !video.muted);
-  });
+    soundToggle.addEventListener('click', () => {
+      video.muted = !video.muted;
+      soundIcon.classList.toggle('fa-volume-mute', video.muted);
+      soundIcon.classList.toggle('fa-volume-up', !video.muted);
+    });
 
-  // Preload videos
-  videoSources.forEach(src => {
-    const link = document.createElement('link');
-    link.rel = 'preload';
-    link.as = 'video';
-    link.href = src;
-    document.head.appendChild(link);
-  });
-</script>
+    // Gallery slideshow
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) { showSlides(slideIndex += n); }
+    function currentSlide(n) { showSlides(slideIndex = n); }
+
+    function showSlides(n) {
+      const slides = document.getElementsByClassName("mySlides");
+      const dots = document.getElementsByClassName("demo");
+      if (n > slides.length) slideIndex = 1;
+      if (n < 1) slideIndex = slides.length;
+      for (let i = 0; i < slides.length; i++) slides[i].style.display = "none";
+      for (let i = 0; i < dots.length; i++) dots[i].classList.remove("active");
+      slides[slideIndex - 1].style.display = "block";
+      dots[slideIndex - 1].classList.add("active");
+    }
+  </script>
 </body>
 </html>
